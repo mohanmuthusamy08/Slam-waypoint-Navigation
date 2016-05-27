@@ -1,0 +1,15 @@
+<launch>
+  <!-- urdf xml robot description loaded on the Parameter Server-->
+  <param name="robot_description" textfile="/home/mohan/atrv_sim/atrv.urdf" />
+ 
+  <!-- source that publishes the joint positions as a sensor_msgs/JointState -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+ 
+  <!-- publish all the frames to TF -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
+
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_base_laser_link" args="0.0 0.0 0.0 0.0 0.0 0.0 /base_link /base_laser_link 100" />
+  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link" args="0 0 0 0 0 0  /base_footprint /base_link 100"  />
+
+</launch>
+

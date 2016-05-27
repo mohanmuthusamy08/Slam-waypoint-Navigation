@@ -1,0 +1,57 @@
+from morse.builder import *
+
+
+robot = ATRV() 
+clock = Clock()
+robot.add_interface('ros')
+clock.add_interface('ros')
+
+robot.translate(x=2.5, y=3.2, z=0.0)
+clock.translate(x=2.5, y=3.2, z=0.0)
+clock.rotate(x=0.5, y=1.2, z=0.0)
+
+# An odometry sensor to get odometry information
+
+odometry = Odometry()
+
+robot.append(odometry)
+robot.append(clock)
+
+odometry.add_interface('ros', topic="/odom")
+clock.add_interface('ros', topic="/clock")
+
+
+# Keyboard control
+
+keyboard = Keyboard()
+
+robot.append(keyboard)
+
+# Set the environment
+
+#env = Environment('indoors-1/indoor-1')
+
+env = Environment('laas/grande_salle')
+
+#env.set_camera_rotation([1.0470, 0, 0.7854])
+
+scan = Hokuyo()
+
+scan.translate(x=0.275, z=0.252)
+
+robot.append(scan)
+
+scan.properties(Visible_arc = True)
+
+scan.properties(laser_range = 30.0)
+
+scan.properties(resolution = 1.0)
+
+scan.properties(scan_window = 180.0)
+
+scan.create_laser_arc()
+
+
+
+scan.add_interface('ros', topic='/base_scan')
+

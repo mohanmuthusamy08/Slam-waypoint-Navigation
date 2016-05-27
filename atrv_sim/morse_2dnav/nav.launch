@@ -1,0 +1,33 @@
+<launch>
+
+
+    <node name="map_server" pkg="map_server" type="map_server" args="/home/mohan/atrv_sim/morse_2dnav/simple_world.yaml"/>
+
+    <node name="amcl" pkg="amcl" type="amcl">
+    <remap from="/scan" to="/base_scan" />
+    </node>
+
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true">
+
+    <remap from="map" to="/map" />
+
+    <!--param name="footprint_padding" value="0.01" /-->
+    <!--param name="controller_frequency" value="0.5" /-->
+    <!--param name="controller_patience" value="15.0" /-->
+    <!--param name="planner_frequency" value="0.0" /-->
+    <!--param name="oscillation_distance" value="0.1" /-->
+    <!--param name="heading_lookahead" value="2.0" /-->
+    <!--param name="heading_scoring_timestep" value="2.0" /-->
+
+
+    <rosparam file="$(find morse_2dnav)/morse_move_base/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find morse_2dnav)/morse_move_base/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find morse_2dnav)/morse_move_base/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find morse_2dnav)/morse_move_base/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find morse_2dnav)/morse_move_base/base_local_planner_params.yaml" command="load" />
+    <!--param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" /-->
+    <!--rosparam file="$(find morse_2dnav)/morse_move_base/dwa_planner_ros.yaml" command="load" /-->
+
+
+    </node>
+</launch>

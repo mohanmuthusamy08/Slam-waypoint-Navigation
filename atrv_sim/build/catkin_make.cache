@@ -1,0 +1,2 @@
+
+-DCATKIN_DEVEL_PREFIX=/home/mohan/atrv_sim/devel -DCMAKE_INSTALL_PREFIX=/home/mohan/atrv_sim/install -G Unix Makefiles
